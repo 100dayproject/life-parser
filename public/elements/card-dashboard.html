@@ -1,0 +1,233 @@
+<link rel="import" href="/elements/h-realTime.html">
+<link rel="import" href="/elements/h-gear.html">
+<link rel="import" href="/bower_components/iron-ajax/iron-ajax.html">
+<dom-module id="card-dashboard">
+    <template>
+        <style>
+            :host {
+                display: inline;
+            }
+
+        </style>
+
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-aqua">
+                    <div class="inner">
+                        <h3>1</h3>
+
+                        <p>Câu hỏi</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-bag"></i>
+                    </div>
+                    <a href="/{{ admin_prefix }}/question" class="small-box-footer">Xem chi tiết <i
+                                class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-green">
+                    <div class="inner">
+                        <h3>2</h3>
+
+                        <p>Câu trả lời</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-commenting-o"></i>
+                    </div>
+                    <a href="/{{ admin_prefix }}/answers" class="small-box-footer">Xem chi tiết <i
+                                class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-yellow">
+                    <div class="inner">
+                        <h3>3</h3>
+
+                        <p>Người sử dụng</p>
+                    </div>
+                    <div class="icon">
+                        <i class="ion ion-person-add"></i>
+                    </div>
+                    <a href="/{{ admin_prefix }}/users" class="small-box-footer">Xem chi tiết <i
+                                class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+            <div class="col-lg-3 col-xs-6">
+                <!-- small box -->
+                <div class="small-box bg-red">
+                    <div class="inner">
+                        <h3>4</h3>
+
+                        <p>Bác sỹ</p>
+                    </div>
+                    <div class="icon">
+                        <i class="fa fa-user-md"></i>
+                    </div>
+                    <a href="/{{ admin_prefix }}/doctor" class="small-box-footer">Xem chi tiết <i
+                                class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+            <!-- ./col -->
+        </div>
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-md-8">
+                <div class="box">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Thông tin hệ thống</h3>
+
+                        <div class="box-tools pull-right">
+                            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i
+                                        class="fa fa-minus"></i>
+                            </button>
+                            <button type="button" class="btn btn-box-tool" data-widget="remove"><i
+                                        class="fa fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p class="text-center">
+                                    <h-realTime></h-realTime>
+                                </p>
+
+                                <div class="chart">
+                                    <!-- Sales Chart Canvas -->
+                                    <canvas id="salesChart" style="height: 177px; width: 651px;" width="651"
+                                            height="177"></canvas>
+                                </div>
+                                <!-- /.chart-responsive -->
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-md-6">
+                                <p class="text-center">
+                                    <strong>Báo cáo tỉ lệ</strong>
+                                </p>
+
+                                <div class="progress-group">
+                                    <span class="progress-text">Đã được trả lời / Tổng câu hỏi</span>
+                                <span title="2 câu hỏi cần trả lời"
+                                      class="progress-number"><b>4</b> / 4</span>
+
+                                    <div class="progress sm" title="10%">
+                                        <div class="progress-bar progress-bar-aqua"
+                                             style="width: 10%"></div>
+                                    </div>
+                                </div>
+                                <!-- /.progress-group -->
+                                <div class="progress-group">
+                                    <span class="progress-text">Số lượng bác sỹ / Tổng đăng ký</span>
+                                    <span class="progress-number"><b>7</b> / 3</span>
+
+                                    <div class="progress sm" title="43%">
+                                        <div class="progress-bar progress-bar-red"
+                                             style="width: 43%"></div>
+                                    </div>
+                                </div>
+                                <!-- /.progress-group -->
+                                <div class="progress-group">
+                                    <span class="progress-text">Thành viên VIP</span>
+                                    <span class="progress-number"><b>4</b> / 54</span>
+
+                                    <div class="progress sm" title="36%">
+                                        <div class="progress-bar progress-bar-green"
+                                             style="width: 36%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.col -->
+                        </div>
+                        <!-- /.row -->
+                    </div>
+                    <!-- ./box-body -->
+                    <div class="box-footer">
+                        <div class="row">
+                            <div class="col-sm-3 col-xs-6">
+                                <div class="description-block border-right">
+                                    <h5 class="description-header">Hiện có <a
+                                                href="/{{ admin_prefix }}/question/NotAnswered">4</a> câu
+                                        hỏi</h5>
+                                    <span class="description-text">Chưa được trả lời</span>
+                                </div>
+                                <!-- /.description-block -->
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-sm-3 col-xs-6">
+                                <div class="description-block border-right">
+                                    <h5 class="description-header">
+                                        <a href="/{{ admin_prefix }}/question/NotTopics">5</a> câu hỏi</h5>
+                                    <span class="description-text">Chưa gán topics</span>
+                                </div>
+                                <!-- /.description-block -->
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-sm-3 col-xs-6">
+                                <div class="description-block border-right">
+                                    <h5 class="description-header">
+                                        <a href="/{{ admin_prefix }}/question/NotTopics">{{ commits.totalQuestion }}</a> câu hỏi VIP</h5>
+                                    <span class="description-text">Chưa được trả lời
+
+                                        <iron-ajax
+                                                auto
+                                                url="/admin/dashboard/countQuestionPendingVIP"
+                                                handle-as="json"
+                                                last-response="{{ commits }}">
+                                        </iron-ajax>
+
+                                        <span></span>
+                                    </span>
+                                </div>
+                                <!-- /.description-block -->
+                            </div>
+                            <!-- /.col -->
+                            <div class="col-sm-3 col-xs-6">
+                                <div class="description-block">
+                                </div>
+                                <!-- /.description-block -->
+                            </div>
+                        </div>
+                        <!-- /.row -->
+                    </div>
+                    <!-- /.box-footer -->
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div id="activity" class="box box-solid">
+                    <div class="box-header">
+                        <div class="box-title">Hoạt động gần đây</div>
+                    </div>
+                    <div class="box-body">
+                        <ul class="todo-list ui-sortable">
+
+                            <!-- 7 -->
+                            <li>
+                                <img src="/partial/images/noAvatar.gif" alt=""><a href="#">Lê Phú Hải </a>
+                                <span title="đã cập nhật hình ảnh cho bác sỹ Nguyễn Phạm Hùng">đã cập nhật hình ảnh cho bác ...</span>
+                            </li>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <h-gear></h-gear>
+
+        </div>
+
+    </template>
+    <script>
+        "use strict";
+        Polymer({
+            is: 'card-dashboard'
+        });
+    </script>
+</dom-module>

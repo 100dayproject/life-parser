@@ -1,0 +1,31 @@
+<dom-module id="h-realTime">
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
+            #realTime {
+                font-weight: bold;
+            }
+        </style>
+
+        <div id="realTime">{{ runTimeNow() }}</div>
+    </template>
+    <script>
+        "use strict";
+        Polymer({
+            is: 'h-realTime',
+            runTimeNow: function () {
+                var self = this;
+                setInterval(function () {
+                    let init = new Date().getTime(),
+                            t = new Date(init),
+                            date = [String('00' + t.getDate()).slice(-2), String('00' + (t.getMonth() + 1)).slice(-2), t.getFullYear()],
+                            time = [String('00' + t.getHours()).slice(-2), String('00' + t.getMinutes()).slice(-2), String('00' + t.getSeconds()).slice(-2)];
+
+                    self.$.realTime.textContent =`Hôm nay: ${date.join('/')} - ${time.join(':')}`;
+                }, 1000);
+            }
+        });
+    </script>
+</dom-module>

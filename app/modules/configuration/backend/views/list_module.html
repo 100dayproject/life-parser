@@ -1,0 +1,91 @@
+{% extends 'default_layout.html' %}
+{% block cssExtends %}
+
+    <style>
+        .plugin-title {
+            font-size: 17px;
+            font-weight: bold;
+            color: cornflowerblue;
+        }
+
+        a.label {
+            font-size: 100%;
+        }
+    </style>
+{% endblock %}
+
+{% block content_body %}
+    {#<h3 class="box-title">{{ title }}</h3>#}
+    {#<ul class="todo-list ui-sortable">#}
+    {#{% for i, module in modules %}#}
+    {#<li class="">#}
+    {#<!-- drag handle -->#}
+    {#<span class="handle ui-sortable-handle">#}
+    {#<i class="fa fa-ellipsis-v"></i>#}
+    {#<i class="fa fa-ellipsis-v"></i>#}
+    {#</span>#}
+    {#<!-- checkbox -->#}
+    {#<input type="checkbox" value="" name="">#}
+    {#<!-- todo text -->#}
+    {#<span class="text">{{ module.backend_menu.title }}</span>#}
+    {#<!-- Emphasis label -->#}
+    {#<br>#}
+    {#<span class="product-description">#}
+    {#{{ module.description }}#}
+    {#</span>#}
+    {#<!-- General tools such as edit or delete-->#}
+    {#<div class="tools">#}
+    {#<i class="fa fa-edit"></i>#}
+    {#<i class="fa fa-trash-o"></i>#}
+    {#</div>#}
+    {#</li>#}
+    {#{% endfor %}#}
+    {#</ul>#}
+    <div class="table-container">
+        <table class="table table-striped table-bordered table-hover" id="datatable_orders">
+            <thead>
+            <tr role="row" class="heading">
+                <th>Name</th>
+                <th>Version</th>
+                <th>Description</th>
+                <th width="10%">Status</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for i, module in modules %}
+                <tr>
+                    <td>
+                        <div class="plugin-title"><a href="#">{{ module.backend_menu.title }}</a>
+                        </div>
+                        <div class="module-info">
+                            <span class="module-author">{{ module.author }}</span>
+                        </div>
+                    </td>
+                    <td>{{ module.version }}</td>
+                    <td>{{ module.description }}</td>
+                    <td>
+                        <a class="label label-success" href="javascript:void(0)" title="Activate this module"
+                           onclick="return active('facebook')">Activation</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+{#{% block jsExtends %}#}
+    {#<script src="/libs/plugins/jQueryUI/jquery-ui.min.js"></script>#}
+    {#<script>#}
+        {#"use strict";#}
+
+        {#//jQuery UI sortable for the todo list#}
+        {#$(".todo-list").sortable({#}
+            {#placeholder: "sort-highlight",#}
+            {#handle: ".handle",#}
+            {#forcePlaceholderSize: true,#}
+            {#zIndex: 999999#}
+        {#});#}
+
+    {#</script>#}
+{#{% endblock %}#}

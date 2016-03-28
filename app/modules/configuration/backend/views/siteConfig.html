@@ -1,0 +1,108 @@
+{% extends 'default_layout.html' %}
+
+{% block cssExtends %}
+    <style>
+        .onoffswitch {
+            position: relative; width: 72px;
+            -webkit-user-select:none; -moz-user-select:none; -ms-user-select: none;
+        }
+        .onoffswitch-checkbox {
+            display: none;
+        }
+        .onoffswitch-label {
+            display: block; overflow: hidden; cursor: pointer;
+            border: 2px solid #999999; border-radius: 50px;
+        }
+        .onoffswitch-inner {
+            display: block; width: 200%; margin-left: -100%;
+            transition: margin 0.3s ease-in 0s;
+        }
+        .onoffswitch-inner:before, .onoffswitch-inner:after {
+            display: block; float: left; width: 50%; height: 29px; padding: 0; line-height: 29px;
+            font-size: 11px; color: white; font-family: Trebuchet, Arial, sans-serif; font-weight: bold;
+            box-sizing: border-box;
+        }
+        .onoffswitch-inner:before {
+            content: "ON";
+            padding-left: 15px;
+            background-color: #12C90C; color: #FFFFFF;
+        }
+        .onoffswitch-inner:after {
+            content: "OFF";
+            padding-right: 15px;
+            background-color: #EEEEEE; color: #999999;
+            text-align: right;
+        }
+        .onoffswitch-switch {
+            display: block; width: 18px; margin: 5.5px;
+            background: #FFFFFF;
+            position: absolute; top: 0; bottom: 0;
+            right: 39px;
+            border: 2px solid #999999; border-radius: 50px;
+            transition: all 0.3s ease-in 0s;
+        }
+        .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
+            margin-left: 0;
+        }
+        .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
+            right: 0px;
+        }
+    </style>
+{% endblock %}
+
+{% block content_body %}
+    <div class="tab-content">
+        <div class="tab-pane active" id="site-setting">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="title">Site Title</label>
+                    <input type="text" name="title" id="title" class="form-control" value="{{ siteConfig.title }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="description">Site Description</label>
+                    <input type="text" name="description" id="description" class="form-control"
+                           value="{{ siteConfig.description }}">
+                </div>
+
+                <div class="form-group">
+                    <label for="auto_save_delay">Auto save time delay (second)</label>
+                    <input type="text" name="auto_save_delay" id="auto_save_delay" class="form-control" value="10">
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label for="language">Language Code</label>
+                    <select name="language" id="language" class="form-control">
+
+
+                        <option value="en_US" selected="">en_US</option>
+
+
+                        <option value="vi_VN">vi_VN</option>
+
+
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="number_item">Item Per Page</label>
+                    <input type="text" name="number_item" id="number_item" class="form-control" value="10">
+                </div>
+
+                <div class="form-group">
+                    <label for="myonoffswitch">Read-only</label>
+                    <div class="onoffswitch">
+                        <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox"
+                               id="myonoffswitch" checked>
+                        <label class="onoffswitch-label" for="myonoffswitch">
+                            <span class="onoffswitch-inner"></span>
+                            <span class="onoffswitch-switch"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

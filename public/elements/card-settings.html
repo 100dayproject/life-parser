@@ -1,0 +1,83 @@
+<link rel="import" href="/bower_components/iron-icons/hardware-icons.html">
+
+<dom-module id="card-setting">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      #settings {
+        position: fixed;
+        padding: 15px;
+        top: 160px;
+        left: -200px;
+        width: 200px;
+        height: auto;
+        background-color: #fff;
+        z-index: 999;
+        border: 1px solid #3f51b5;
+        border-left: none;
+        -webkit-transition: background-color .3s ease;
+        -ms-transition: background-color .3s ease;
+        -moz-transition: background-color .3s ease;
+        -o-transition: background-color .3s ease;
+        transition: background-color .3s ease;
+      }
+
+      #setting-handle {
+        cursor: pointer;
+        position: absolute;
+        background-color: #fff;
+        width: auto;
+        height: 45px;
+        top: -1px;
+        right: -45px;
+        padding: 10px;
+        text-align: center;
+        border: 1px solid #3f51b5;
+        border-left: none;
+      }
+
+      iron-icon {
+        -webkit-animation: spin 2s linear infinite;
+        -moz-animation: spin 2s linear infinite;
+        animation: spin 2s linear infinite;
+        color: #3f51b5;
+      }
+    </style>
+
+    <div id="settings">
+      <div id="demo-changer-container">
+        <h4>Demo Settings</h4>
+        <h6>Layout</h6>
+        <h6>Color Palette</h6>
+        <h6>Layout</h6>
+        <h6>Color Palette</h6>
+        <h6>Layout</h6>
+        <h6>Color Palette</h6>
+        <h6>Layout</h6>
+        <h6>Color Palette</h6>
+      </div>
+      <div id="setting-handle">
+        <iron-icon icon="hardware:toys"></iron-icon>
+      </div>
+    </div>
+  </template>
+  <script>
+    "use strict";
+    Polymer({
+      is: 'card-setting',
+      listeners: {
+        'setting-handle.tap': '_toggle'
+      },
+      _toggle: function () {
+        if (this.$.settings.style.left == "-200px" || !this.$.settings.style.left) {
+          this.$.settings.style.left = "0";
+        } else {
+          this.$.settings.style.left = "-200px";
+        }
+      }
+    });
+  </script>
+</dom-module>

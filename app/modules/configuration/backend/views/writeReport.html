@@ -1,0 +1,73 @@
+{% extends 'default_layout.html' %}
+
+{% block content_body %}
+    <div class="box-header with-border">
+            <h3 class="box-title">Gửi yêu cầu tới hệ thống</h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-btn">
+                        <button id="typeReport" type="button" class="btn btn-warning dropdown-toggle btn-flat" data-toggle="dropdown">Chọn loại yêu cầu
+                            <span class="fa fa-caret-down"></span></button>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Yêu cầu chức năng</a></li>
+                            <li><a href="#">Lỗi chức năng</a></li>
+                            <li><a href="#">Góp ý</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#">Báo lỗi</a></li>
+                        </ul>
+                    </div>
+                    <!-- /btn-group -->
+                    <input type="text" placeholder="Tiêu đề yêu cầu" name="subject" class="form-control">
+                </div>
+
+                {#<input class="form-control" placeholder="Tiêu đề">#}
+            </div>
+            {#<div class="form-group">#}
+                {#<input class="form-control" placeholder="Subject:">#}
+            {#</div>#}
+            <div class="form-group">
+                <label for="full_text">Nội dung</label>
+                <textarea name="content" id="content" required></textarea>
+            </div>
+            <div class="form-group">
+                <div class="btn btn-default btn-file">
+                    <i class="fa fa-paperclip"></i> Đính kèm tệp tin
+                    <input type="file" name="attachment">
+                </div>
+                <p class="help-block">Max. 32MB</p>
+            </div>
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+            <div class="pull-right">
+                <button type="button" class="btn btn-default"><i class="fa fa-pencil"></i> Lưu nháp</button>
+                <button type="submit" class="btn btn-primary"><i class="fa fa-envelope-o"></i> Gửi đi</button>
+            </div>
+            <button type="reset" class="btn btn-default"><i class="fa fa-times"></i> Hủy đính kèm</button>
+        </div>
+{% endblock %}
+
+{% block jsExtends %}
+    <script src="/libs/plugins/ckeditor/ckeditor.js"></script>
+    <script>
+        var fileman = "/libs/fileman/dev.html?integration=ckeditor";
+        (function() {
+            CKEDITOR.replace('content', {
+                height: 300,
+                filebrowserBrowseUrl: fileman,
+                filebrowserImageBrowseUrl: fileman + '&type=image',
+                removeDialogTabs: 'link:upload;image:upload;image:advanced;link:advanced'
+            });
+        })();
+
+        $(function(){
+            $(".dropdown-menu li a").click(function(){
+                $("#typeReport").text($(this).text());
+                $("#typeReport").val($(this).text());
+            });
+        });
+    </script>
+{% endblock %}

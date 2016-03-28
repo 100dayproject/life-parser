@@ -1,0 +1,37 @@
+<dom-module id="h-gear">
+    <template>
+        <style>
+            :host {
+                display: inline;
+            }
+
+            img {
+                position: relative;
+                bottom: 70px;
+                right: -60px;
+                -webkit-animation: fa-spin 6s infinite linear;
+                animation: fa-spin 6s infinite linear;
+                float: right;
+                cursor: pointer;
+                opacity: .3;
+            }
+
+        </style>
+
+        <div id="gear">
+            <img src="/partial/images/gear.png" alt="Gear">
+        </div>
+    </template>
+    <script>
+        "use strict";
+        Polymer({
+            is: 'h-gear',
+            listeners: {
+                'gear.tap': '_showModal'
+            },
+            _showModal: function () {
+                console.log('modal');
+            }
+        });
+    </script>
+</dom-module>

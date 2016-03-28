@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{{ title }}</title>
+    <link rel="shortcut icon" href="{{ siteConfig.favicon }}" type="image/x-icon">
+    <meta name="keywords" content="{{ siteConfig.keywords }}">
+    <meta name="description" content="{{ siteConfig.description }}">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+
+    <link rel="stylesheet" href="/libs/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="/libs/font-awesome.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="/libs/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/libs/AdminLTE.css">
+    <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
+    page. However, you can choose any other skin. Make sure you
+    apply the skin class to the body tag so the changes take effect.-->
+    <link rel="stylesheet" href="/libs/skins/_all-skins.min.css">
+
+    <link rel="stylesheet" href="/libs/custom.css">
+
+    <script src="/bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="/bower_components/polymer/polymer.html">
+    {% block polymer %}{% endblock %}
+    {% block cssExtends %}
+        <link rel="stylesheet" href="/libs/plugins/daterangepicker/daterangepicker-bs3.css">
+    {% endblock %}
+</head>
+
+{% if protected == '0' %}
+    <style>
+        #systemNotify {
+            text-align: center;
+            height: 35px;
+            background-color: #dd4b39;
+            margin: 0;
+            color: #fff;
+            text-transform: uppercase;
+            padding-top: 7px;
+        }
+    </style>
+    <p id="systemNotify"><i class="fa fa-exclamation-triangle"></i> Hệ thống đang khóa!</p>
+{% endif %}
+
+<body fullbleed unresolved class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper">
+
+    <!-- Main Header -->
+    {% include themeName + '/_header.html' %}
+
+    <!-- Left side column. contains the logo and sidebar -->
+    {% include themeName + '/_menu.html' %}
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        {#<section class="content-header">#}
+        {#<h1>{{ pageTitle }}</h1>#}
+        {#</section>#}
+
+        <!-- Main content -->
+        <section class="content">
+            {% include themeName + '/custom_flash.html' %}
+            <div class="row">
+                <div class="col-md-12">
+                    {% block content %}
+                        {{ toolbar|safe }}
+                        <div class="box box-solid box-primary">
+                            {% if totalRecord %}
+                                <div class="box-header with-border">
+                                    <div class="box-title">
+                                        {#Đang chọn <span class="label label-info" id="countSelect"></span> bản ghi#}
+                                    </div>
+                                    <div class="box-title pull-right">
+                                        {% if totalRecord %}
+                                            Hiển thị {{ results.length|number_format }} của {{ totalRecord|number_format }} bản ghi
+                                        {% else %}
+                                            Hiện có {{ results.length|number_format }} bản ghi
+                                        {% endif %}
+                                    </div>
+
+                                </div>
+                            {% endif %}
+                            <div class="box-body table-responsive">
+                                <table class="table table-striped table-bordered table-hover" id="datatable_orders">
+                                    <thead>
+                                    {% include themeName +'/basic_table/header.html' %}
+                                    {% include themeName + '/basic_table/filter.html' %}
+                                    </thead>
+                                    <tbody>
+                                    {% block content_body %}{% endblock %}
+                                    </tbody>
+                                </table>
+                                {% if totalPage %}
+                                    {{ totalPage|pagination(currentPage, currentURI) }}
+                                {% endif %}
+                            </div>
+                        </div>
+                    {% endblock %}
+                </div>
+            </div>
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+
+    <!-- Main Footer -->
+    <footer class="main-footer">
+        <!-- To the right -->
+        <div class="pull-right hidden-xs"></div>
+        <!-- Default to the left -->
+        <strong>Copyright &copy; 2015 <a href="#">{{ siteConfig.name }}</a>.</strong> All rights reserved.
+    </footer>
+</div>
+<!-- ./wrapper -->
+<script src="/libs/jquery.min.js"></script>
+<script src="/libs/bootstrap.min.js"></script>
+<script src="/libs/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+<script type="application/javascript" src="/libs/plugins/fastclick/fastclick.min.js"></script>
+<!-- AdminLTE App -->
+<script src="/libs/app.js"></script>
+
+<!-- REQUIRED JS SCRIPTS -->
+{% block jsExtends %}
+    <script src="/libs/plugins/daterangepicker/moment.min.js"></script>
+    <script src="/libs/plugins/daterangepicker/daterangepicker.js"></script>
+    <script>
+        $('input[type="date-range"]').daterangepicker({format: 'YYYY-MM-DD'});
+    </script>
+    <script>
+        function checkAll(selectAll) {
+            var input = document.getElementsByTagName('input');
+            for (var i = 0; i < input.length; i++) {
+                if (input[i].type == 'checkbox') {
+                    input[i].checked = selectAll.checked;
+                }
+            }
+        }
+    </script>
+{% endblock %}
+</body>
+</html>

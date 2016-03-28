@@ -1,0 +1,55 @@
+<link rel="import" href="/bower_components/iron-ajax/iron-ajax.html">
+
+<dom-module id="api-services">
+    <template>
+        <style>
+            :host {
+                display: inline;
+            }
+        </style>
+
+        <div id="service">
+            <iron-ajax
+                    auto
+                    url="{{ url }}"
+                    params='{{ params }}'
+                    handle-as="{{ handleAs }}"
+                    on-response="{{ onResponse }}"
+                    last-response="{{ commits }}">
+            </iron-ajax>
+        </div>
+    </template>
+    <script>
+        "use strict";
+        Polymer({
+            is: 'api-services',
+            properties: {
+                module: {
+                    type: String
+                },
+                url: {
+                    computed: '_computeUrl(module)'
+                },
+                params: {
+                    type: Object,
+                    notify: true
+                },
+                handleAs: {
+                    type: String,
+                    notify: true,
+                    default: 'json'
+                },
+                onResponse: {
+                    type: Function,
+                    notify: true
+                },
+                commits: {
+                    type: String
+                }
+            },
+            _computeUrl: function (url) {
+                return `http://localhost:1337/admin${url}`
+            }
+        });
+    </script>
+</dom-module>

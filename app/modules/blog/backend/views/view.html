@@ -1,0 +1,122 @@
+{% extends 'default_layout.html' %}
+
+{% block cssExtends %}
+    <link rel="stylesheet" href="/libs/plugins/select2/plugin/select2.css">
+{% endblock %}
+
+{% block content %}
+    <form action="" method="post">
+        {{ toolbar|safe }}
+        <div class="box box-primary">
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-md-9 col-sm-9">
+                        <div class="form-group">
+                            <label for="title">Tiêu đề<span class="required">*</span></label>
+                            <input type="text" class="form-control" name="title" id="title"
+                                   value="{{ post.title }}"
+                                   autocomplete="off" required="required">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="full_text">Nội dung</label>
+                            <textarea name="content" id="content" required>{{ post.full_text }}</textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="intro_text">Mô tả</label>
+                            <textarea name="intro_text" id="intro_text" class="form-control" rows="5"
+                                      style="visibility: hidden; display: none;">{{ post.intro_text }}</textarea>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 col-sm-3">
+                        <div class="form-group">
+                            <label for="isPublish">Trạng thái</label>
+                            <select data-tags="true" name="isPublish" id="isPublish" class="form-control">
+                                {% if post.isPublish %}
+                                    <option value="true" selected="selected">Phát hành</option>
+                                    <option value="false">Bản nháp</option>
+                                {% else %}
+                                    <option value="false" selected="selected">Bản nháp</option>
+                                    <option value="true">Phát hành</option>
+                                {% endif %}
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="id_category">Danh mục</label>
+
+                            <select multiple="multiple" name="id_category" id="id_category"
+                                    class="form-control">
+                                {% for cat in post.categories %}
+                                    <option selected value="{{ cat._id }}">{{ cat.name }}</option>
+                                {% endfor %}
+
+                                {% for cat in categories %}
+                                    <option value="{{ cat._id }}">{{ cat.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label">Hình đại diện</label>
+
+                            <img id="previewImage"
+                                 src="{{ post.image }}"
+                                 class="img-thumbnail">
+
+                            <input class="form-control" type="text" name="image" id="txtSelectedFile"
+                                   placeholder="Click here to select a file" onclick="openModelFeature()"
+                                   value="{{ post.image }}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="alias">Alias</label>
+                            <input type="text" class="form-control" name="alias" id="alias"
+                                   value="{{ post.alias }}" autocomplete="off">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+{% endblock %}
+
+{% block jsExtends %}
+    <script src="/libs/plugins/ckeditor/ckeditor.js"></script>
+    <script src="/libs/plugins/select2/plugin/select2.min.js"></script>
+    <script>
+        var fileman = "/libs/fileman/dev.html?integration=ckeditor";
+
+        (function () {
+            /* BEGIN init ckeditor */
+            CKEDITOR.replace('content', {
+                height: 300,
+                filebrowserBrowseUrl: fileman,
+                filebrowserImageBrowseUrl: fileman + '&type=image',
+                removeDialogTabs: 'link:upload;image:upload;image:advanced;link:advanced'
+            });
+
+            CKEDITOR.replace('intro_text', {
+                height: 100,
+                toolbar: [
+                    {name: 'basicstyles', items: ['Bold', 'Italic', 'Underline']}
+                ]
+            });
+
+
+            /* BEGIN init select2 */
+            var select2 = $('#id_category');
+            select2.select2({
+                placeholder: "Chọn danh mục",
+                templateSelection: function (option) {
+                    var text = $(option.element).text().trim();
+                    text = text.replace(/^[—]+/, '');
+                    return text;
+                }
+            });
+        })();
+    </script>
+{% endblock %}
